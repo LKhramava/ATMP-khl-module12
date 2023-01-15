@@ -9,43 +9,33 @@ using WebDriverNUnit.WebDriver;
 
 namespace WebDriverNUnit
 {
-	internal class UnitTestRESTWebService
+	internal class UnitTestRESTWebService : BaseTestRESTWebService
 	{
 		[Test]
 		public void TestCheckGetUsersStatusCode()
 		{
-			var responce = MakeRequest();
-			Assert.IsTrue(responce.StatusCode == HttpStatusCode.OK);
+			var expectedStatusCode = HttpStatusCode.OK;
+			Assert.AreEqual(expectedStatusCode, Response.StatusCode);
 		}
 
 		[Test]
 		public void TestCheckGetUsersContentTypeHeader()
 		{
-			var response = MakeRequest();
-			var contentType = response.ContentType;
+			var expectedContentType = "application/json; charset=utf-8";
+			var contentType = Response.ContentType;
 
-			Assert.IsTrue(contentType == "application/json; charset=utf-8");
+			Assert.AreEqual(expectedContentType, contentType);
 		}
 
 		[Test]
 		public void TestCheckGetUsersCount()
 		{
-			var response = MakeRequest();
-			var responseBody = GetReponseBody(response);
+			var expectedUsersCount = 10;
+			var responseBody = GetReponseBody(Response);
 
 			List<UserInfo> users = JsonConvert.DeserializeObject<List<UserInfo>>(responseBody);
 
-			Assert.IsTrue(users.Count == 10);
-		}
-
-		public static HttpWebResponse MakeRequest()
-		{
-			string responceBody = String.Empty;
-			HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(Configuration.JsonPlaceholderUrl);
-			request.Method = "Get";
-
-			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-			return response;
+			Assert.AreEqual(expectedUsersCount, users.Count);
 		}
 
 		private static string GetReponseBody(HttpWebResponse response)
