@@ -14,5 +14,6 @@ namespace WebDriverNUnit.WebDriver
 		public static string StartUrl = GetEnvironmentVal("StartUrl", "https://www.mail.ru/");
 		public static string UserData = GetEnvironmentVal("UserData", @".\Resources\UserData.xml");
 		public static string LetterData = GetEnvironmentVal("LetterData", @".\Resources\LetterData.xml");
+		public static string JsonPlaceholderUrl = GetEnvironmentVal("JsonPlaceholderUrl", "https://jsonplaceholder.typicode.com/users");
 	}
 }
